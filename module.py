@@ -81,7 +81,8 @@ class Molecular:
             self.smart = [Chem.MolFromSmarts(i.split()[1]) for i in funcgroups]
             self.smart2name = dict(zip(self.smart, name))
 
-
+    def get_features(self):
+        return self.mol
 
 # build the mol graph
 class MolGraph:

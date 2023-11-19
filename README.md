@@ -1,5 +1,5 @@
 # ElementKG
-This repository is the implementation of **KANO ElementKG**, which is model proposed in paper:[**Knowledge graph-enhanced molecular contrastive learning with functional prompt**](https://www.nature.com/articles/s42256-023-00654-0)
+This repository is the implementation of **ElementKG**, which is model proposed in paper:[**Knowledge graph-enhanced molecular contrastive learning with functional prompt**](https://www.nature.com/articles/s42256-023-00654-0)
 
 ***
 
@@ -13,9 +13,21 @@ gensim      4.2.0
 nltk        3.4.5
 rdflib      7.0.0
 ```
+# Tutorial
+```python
+from ElementKG import Molecular
 
-# About 
-Should you have any questions, please feel free to contact gryshr@163.com
+# e.g
+# smiles type can str or list
+smiles = "[C@@H]1([C@@H]([C@@H]([C@H]([C@@H]([C@@H]1Cl)Cl)Cl)Cl)Cl)Cl" 
+
+mol = Molecular(smiles)
+
+# The features in mol.mol
+print(mol.mol)
+
+```
+
 
 # References
 Please cite the paper if you use this code in your work:
