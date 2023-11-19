@@ -60,3 +60,5 @@ def get_property_utlimate_emb_dict(org_emb_data, pro_list) -> dict:
     return property_emb
 
 
+
+

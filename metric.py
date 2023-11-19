@@ -5,7 +5,7 @@
 # @File     : metric.py
 # @Project  : ElementKG
 import pickle
-from rdkit import Chem
+
 import numpy as np
 from sklearn.decomposition import PCA
 from rdflib import Graph
@@ -16,7 +16,9 @@ from utils import *
 
 
 class DataProcess:
-    
+    """
+    Generate the base data embedding
+    """
     def __init__(self):
         super().__init__()
         # VSCode and PyCharm Path have different.
@@ -27,18 +29,8 @@ class DataProcess:
         self.path = cur_path.joinpath("data")
         # check the embedding, True if Exist,  else False
         fg_flag, ele_flag, rel_flag = self.check_pkl()
-
-        # load the ontology embedding and functional group embedding
-        if not fg_flag or not ele_flag or not rel_flag:
-            self.onto_path = self.path.joinpath("elementkgontology.embeddings.txt")
-            self.fg_path = self.path.joinpath("funcgroup.txt")
-            self.onto_emb = self.get_onto_emb()
-            self.fg_name = self.get_fg_name()
-        else:
-            self.onto_path = None
-            self.fg_path = None
-            self.onto_emb = None
-            self.fg_name = None
+        self.onto_path = self.path.joinpath("elementkgontology.embeddings.txt")
+        self.fg_path = self.path.joinpath("funcgroup.txt")
 
         # fg_emb
         fg_filename = self.path.joinpath("fg2emb.pkl")
@@ -46,10 +38,13 @@ class DataProcess:
         # getting the fg2emb dict
         if fg_flag:
             # Load the fg
-            self.fg2emb = pickle.load(open(fg_filename, 'rb'))
+            self.fg_emb = pickle.load(open(fg_filename, 'rb'))
         else:
+            # load the ontology embedding and functional group embedding
+            self.onto_emb = self.get_onto_emb()
+            self.fg_name = self.get_fg_name()
             # generate the fg_2_emb
-            self.fg2emb = self.get_emb_dict(self.onto_emb, self.fg_name, fg_filename, True)
+            self.fg_emb = self.get_emb_dict(self.onto_emb, self.fg_name, fg_filename, True)
 
         # generate the element symbols
         self.element_symbols = [get_atom_symbol(i) for i in range(1, 109)]
