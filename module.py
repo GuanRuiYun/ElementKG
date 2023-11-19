@@ -42,8 +42,8 @@ SMILES_TO_GRAPH = {}
 
 
 class Molecular:
-    def __init__(self, smiles: List):
-        super(self).__init__()
+    def __init__(self, smiles):
+
         # load the kg data
         self.data = DataProcess()
         self.fg2emb = self.data.fg_emb

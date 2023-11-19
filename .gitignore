@@ -5,7 +5,7 @@ res/*
 __pycache__/*
 lightning_logs/*
 .DS_Store
-
+train.py
 
 
 

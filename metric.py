@@ -20,7 +20,7 @@ class DataProcess:
     Generate the base data embedding
     """
     def __init__(self):
-        super().__init__()
+
         # VSCode and PyCharm Path have different.
         # VSCode can use cwd, The PyCharm use parent
         cur_path = Path.cwd()
@@ -35,14 +35,15 @@ class DataProcess:
         # fg_emb
         fg_filename = self.path.joinpath("fg2emb.pkl")
 
+        # load the ontology embedding and functional group embedding
+        self.onto_emb = self.get_onto_emb()
+        self.fg_name = self.get_fg_name()
         # getting the fg2emb dict
         if fg_flag:
             # Load the fg
             self.fg_emb = pickle.load(open(fg_filename, 'rb'))
         else:
-            # load the ontology embedding and functional group embedding
-            self.onto_emb = self.get_onto_emb()
-            self.fg_name = self.get_fg_name()
+
             # generate the fg_2_emb
             self.fg_emb = self.get_emb_dict(self.onto_emb, self.fg_name, fg_filename, True)
 
@@ -128,7 +129,7 @@ class DataProcess:
         g = Graph()
         g.parse(g_files, format="xml")
 
-        print("getting rel2emb dict ...")
+        # print("getting rel2emb dict ...")
         rel_emb = {}
         for i in range(len(ele_symbols) - 1):
             for j in range(1, len(ele_symbols)):
@@ -140,7 +141,7 @@ class DataProcess:
 
                 relations = g.query(qr)
                 relations = list(relations)
-                relations = [pro_emb[rel[0]] for rel in relations]
+                relations = [property_emb_dict[rel[0]] for rel in relations]
 
                 if relations:
                     relation = np.mean(relations, axis=0)
